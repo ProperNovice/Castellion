@@ -37,10 +37,10 @@ public enum TileDeck {
 				for (EShapeType eShapeType : EShapeType.values())
 					this.tileDefenders.addLast(new TileDefender(eDefenderFaction, eShapeType));
 
-		for (int counter = 1; counter <= 8; counter++)
+		for (int counter = 1; counter <= 9; counter++)
 			this.tileTraitorNormal.addLast(new TileTraitorNormal());
 
-		for (int counter = 1; counter <= 4; counter++)
+		for (int counter = 1; counter <= 3; counter++)
 			this.tileTraitorBlack.addLast(new TileTraitorBlack());
 
 	}
@@ -85,7 +85,7 @@ public enum TileDeck {
 
 		while (!this.tileTraitorNormal.isEmpty()) {
 
-			for (int counter = 1; counter <= 2; counter++)
+			for (int counter = 1; counter <= 3; counter++)
 				list.addLast(this.tileTraitorNormal.removeFirst());
 
 			list.addLast(this.tileTraitorBlack.removeFirst());

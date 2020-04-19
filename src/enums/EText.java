@@ -7,6 +7,10 @@ public enum EText {
 	BLANK("", TextTypeEnum.INDICATOR),
 	CONTINUE("Continue", TextTypeEnum.OPTION),
 	RESTART("Restart", TextTypeEnum.OPTION),
+	DRAW_TILE_FROM_PILE("Draw tile from pile", TextTypeEnum.INDICATOR),
+	NORMAL("Normal", TextTypeEnum.OPTION),
+	SAFE("Safe", TextTypeEnum.OPTION),
+	CHOOSE_A_SEER_TILE("Choose a Seer tile", TextTypeEnum.INDICATOR),
 
 	;
 

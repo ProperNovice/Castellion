@@ -1,10 +1,21 @@
 package controller;
 
 import interfaces.ISaveLoadStateAble;
+import tile.Tile;
 
 public enum Modifiers implements ISaveLoadStateAble {
 
 	INSTANCE;
+
+	private Tile tileToPlay = null;
+
+	public void setTileToPlay(Tile tileToPlay) {
+		this.tileToPlay = tileToPlay;
+	}
+
+	public Tile getTileToPlay() {
+		return this.tileToPlay;
+	}
 
 	private Modifiers() {
 		saveStart();

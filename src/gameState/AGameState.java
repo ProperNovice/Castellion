@@ -1,7 +1,9 @@
 package gameState;
 
+import controller.Lists;
 import enums.EText;
 import javafx.scene.input.KeyCode;
+import tile.Tile;
 import utils.KeyCodeHandler;
 import utils.Logger;
 import utils.Text;
@@ -35,6 +37,29 @@ public abstract class AGameState {
 	}
 
 	protected void executeTextOption(EText eText) {
+
+	}
+
+	public final void handleTilePressed(Tile tile) {
+
+		if (Lists.INSTANCE.drawSeer.getArrayList().contains(tile))
+			handleTileDrawSeerPressed(tile);
+		else if (Lists.INSTANCE.deckNormal.getArrayList().contains(tile))
+			handleTileDeckNormalPressed(tile);
+		else if (Lists.INSTANCE.deckSafe.getArrayList().contains(tile))
+			handleTileDeckSafePressed(tile);
+
+	}
+
+	protected void handleTileDrawSeerPressed(Tile tile) {
+
+	}
+
+	protected void handleTileDeckNormalPressed(Tile tile) {
+
+	}
+
+	protected void handleTileDeckSafePressed(Tile tile) {
 
 	}
 

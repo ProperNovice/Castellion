@@ -32,6 +32,9 @@ public enum Flow {
 
 	private void createTurns() {
 
+//		this.flow.addLast(EGameState.DRAW_PHASE);
+//		this.flow.addLast(EGameState.HANDLE_TILE_TO_PLAY);
+
 	}
 
 	private void executeGameState() {

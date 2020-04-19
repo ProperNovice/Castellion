@@ -16,7 +16,7 @@ public enum Lists implements ISaveLoadStateAble {
 	INSTANCE;
 
 	public ArrayList<ISaveLoadStateAble> iSaveLoadStateAbles = new ArrayList<ISaveLoadStateAble>();
-	public ListImageViewAbles<Tile> deck, deckSafe;
+	public ListImageViewAbles<Tile> deckNormal, deckSafe, drawNormal, drawSeer;
 
 	public void instantiate() {
 
@@ -45,10 +45,10 @@ public enum Lists implements ISaveLoadStateAble {
 
 	private void createDeck() {
 
-		this.deck.getArrayList().clear();
-		this.deck.getArrayList().addAll(TileDeck.INSTANCE.getDeck());
-		this.deck.toFrontFirstImageView();
-		this.deck.relocateImageViews();
+		this.deckNormal.getArrayList().clear();
+		this.deckNormal.getArrayList().addAll(TileDeck.INSTANCE.getDeck());
+		this.deckNormal.toFrontFirstImageView();
+		this.deckNormal.relocateImageViews();
 
 	}
 
@@ -66,8 +66,8 @@ public enum Lists implements ISaveLoadStateAble {
 
 		// deck
 
-		this.deck = new ListImageViewAbles<Tile>(
-				new CoordinatesBuilder().coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDeck)
+		this.deckNormal = new ListImageViewAbles<Tile>(
+				new CoordinatesBuilder().coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDeckNormal)
 						.rearrangeTypeEnum(RearrangeTypeEnum.STATIC).build());
 
 		// deck safe
@@ -75,6 +75,19 @@ public enum Lists implements ISaveLoadStateAble {
 		this.deckSafe = new ListImageViewAbles<Tile>(
 				new CoordinatesBuilder().coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDeckSafe)
 						.rearrangeTypeEnum(RearrangeTypeEnum.STATIC).build());
+
+		// draw normal
+
+		this.drawNormal = new ListImageViewAbles<Tile>(
+				new CoordinatesBuilder().coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDrawNormal)
+						.rearrangeTypeEnum(RearrangeTypeEnum.STATIC).build());
+
+		// draw seer
+
+		this.drawSeer = new ListImageViewAbles<Tile>(
+				new CoordinatesBuilder().dimensionsNumbersPair(Credentials.INSTANCE.DimensionsTile)
+						.coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDrawSeer).build(),
+				4);
 
 	}
 

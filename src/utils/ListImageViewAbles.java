@@ -11,9 +11,13 @@ public class ListImageViewAbles<T> implements Iterable<T> {
 	protected Coordinates coordinates = null;
 
 	public ListImageViewAbles(Coordinates coordinates) {
+
 		this.coordinates = coordinates;
 		this.coordinates.setList(this.arrayList);
+
 		Lists.INSTANCE.iSaveLoadStateAbles.addLast(this.arrayList);
+		RealTimeDuplicateProtection.INSTANCE.addList(this.arrayList);
+
 	}
 
 	public ListImageViewAbles(Coordinates coordinates, int capacity) {

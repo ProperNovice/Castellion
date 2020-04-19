@@ -20,7 +20,7 @@ import utils.ShutDown;
 
 public class FX extends Application {
 
-	private NumbersPair dimensionsInsets = new NumbersPair(7, 29);
+	private NumbersPair dimensionsInsets = new NumbersPair(6, 29);
 	private double pixesOnTheLeft = 180;
 
 	@Override

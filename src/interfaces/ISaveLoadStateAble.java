@@ -2,9 +2,9 @@ package interfaces;
 
 public interface ISaveLoadStateAble {
 
-	public void saveStartGame();
+	public void saveStart();
 
-	public void loadStartGame();
+	public void loadStart();
 
 	public void saveState();
 

@@ -3,20 +3,17 @@ package utils;
 import java.util.Iterator;
 
 import controller.Lists;
-import interfaces.ISaveLoadStateAble;
 import utils.Animation.AnimationSynch;
 
-public class ListImageViewAbles<T> implements ISaveLoadStateAble, Iterable<T> {
+public class ListImageViewAbles<T> implements Iterable<T> {
 
 	protected ArrayList<T> arrayList = new ArrayList<>();
-	protected ArrayList<T> arrayListRestartGame = new ArrayList<>();
-	protected ArrayList<T> arrayListSaveLoadStateGame = new ArrayList<>();
 	protected Coordinates coordinates = null;
 
 	public ListImageViewAbles(Coordinates coordinates) {
 		this.coordinates = coordinates;
-		Lists.INSTANCE.iSaveLoadStateAbles.addLast(this);
 		this.coordinates.setList(this.arrayList);
+		Lists.INSTANCE.iSaveLoadStateAbles.addLast(this.arrayList);
 	}
 
 	public ListImageViewAbles(Coordinates coordinates, int capacity) {
@@ -24,7 +21,7 @@ public class ListImageViewAbles<T> implements ISaveLoadStateAble, Iterable<T> {
 		this.arrayList.setCapacity(capacity);
 	}
 
-	public void toFront() {
+	public void toFrontFirstImageView() {
 
 		ImageViewAble imageViewAble = null;
 
@@ -37,7 +34,7 @@ public class ListImageViewAbles<T> implements ISaveLoadStateAble, Iterable<T> {
 
 	}
 
-	public void toBack() {
+	public void toBackFirstImageView() {
 
 		ImageViewAble imageViewAble = null;
 
@@ -113,26 +110,6 @@ public class ListImageViewAbles<T> implements ISaveLoadStateAble, Iterable<T> {
 
 	public ArrayList<T> getArrayList() {
 		return this.arrayList;
-	}
-
-	@Override
-	public void saveStartGame() {
-		this.arrayListRestartGame = this.arrayList.clone();
-	}
-
-	@Override
-	public void loadStartGame() {
-		this.arrayList = this.arrayListRestartGame.clone();
-	}
-
-	@Override
-	public void saveState() {
-		this.arrayListSaveLoadStateGame = this.arrayList.clone();
-	}
-
-	@Override
-	public void loadState() {
-		this.arrayList = this.arrayListSaveLoadStateGame.clone();
 	}
 
 	@Override

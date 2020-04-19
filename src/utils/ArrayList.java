@@ -3,9 +3,13 @@ package utils;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class ArrayList<T> implements Iterable<T> {
+import interfaces.ISaveLoadStateAble;
+
+public class ArrayList<T> implements Iterable<T>, ISaveLoadStateAble {
 
 	private java.util.ArrayList<T> list = new java.util.ArrayList<>();
+	private java.util.ArrayList<T> listStart = new java.util.ArrayList<>();
+	private java.util.ArrayList<T> listState = new java.util.ArrayList<>();
 	private int capacity = -1;
 
 	public ArrayList() {
@@ -192,6 +196,28 @@ public class ArrayList<T> implements Iterable<T> {
 
 		return arrayListToReturn;
 
+	}
+
+	@Override
+	public void saveStart() {
+		this.listStart.addAll(this.list);
+	}
+
+	@Override
+	public void loadStart() {
+		this.list.clear();
+		this.list.addAll(this.listStart);
+	}
+
+	@Override
+	public void saveState() {
+		this.listState.addAll(this.list);
+	}
+
+	@Override
+	public void loadState() {
+		this.list.clear();
+		this.list.addAll(this.listState);
 	}
 
 }

@@ -7,16 +7,16 @@ public enum Modifiers implements ISaveLoadStateAble {
 	INSTANCE;
 
 	private Modifiers() {
-
+		saveStart();
 	}
 
 	@Override
-	public void saveStartGame() {
-
+	public void saveStart() {
+		loadStart();
 	}
 
 	@Override
-	public void loadStartGame() {
+	public void loadStart() {
 
 	}
 

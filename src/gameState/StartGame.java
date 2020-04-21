@@ -8,6 +8,7 @@ import enums.EGameState;
 import enums.EShapeType;
 import tile.Tile;
 import tile.TileDefender;
+import tile.TileEmpty;
 
 public class StartGame extends AGameState {
 
@@ -25,6 +26,9 @@ public class StartGame extends AGameState {
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.DRAW_PHASE);
 
 		Flow.INSTANCE.proceed();
+		
+		TileEmpty tileEmpty = new TileEmpty();
+		tileEmpty.getImageView().relocateTopLeft(100, 100);
 
 	}
 

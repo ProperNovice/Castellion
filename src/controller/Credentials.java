@@ -9,7 +9,7 @@ public enum Credentials {
 	public final String primaryStageTitle = "Castellion";
 	public NumbersPair DimensionsFrame, DimensionsGapBetweenComponents, DimensionsTile;
 	public NumbersPair CoordinatesTextPanel, CoordinatesDeckNormal, CoordinatesDeckSafe, CoordinatesDrawNormal,
-			CoordinatesDrawSeer;
+			CoordinatesDrawSeer, CoordinatesBoardMinusOne;
 	public double gapBetweenBorders = 25, textHeight = 50;
 
 	private Credentials() {
@@ -27,10 +27,6 @@ public enum Credentials {
 
 		x = this.gapBetweenBorders;
 		y = this.gapBetweenBorders;
-		this.CoordinatesDrawNormal = new NumbersPair(x, y);
-
-		x = this.CoordinatesDrawNormal.x + this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x;
-		y = this.CoordinatesDrawNormal.y;
 		this.CoordinatesDeckNormal = new NumbersPair(x, y);
 
 		x = this.CoordinatesDeckNormal.x + this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x;
@@ -38,12 +34,21 @@ public enum Credentials {
 		this.CoordinatesDeckSafe = new NumbersPair(x, y);
 
 		x = this.CoordinatesDeckSafe.x + this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x;
-		y = this.CoordinatesDeckNormal.y;
+		y = this.CoordinatesDeckSafe.y;
 		this.CoordinatesDrawSeer = new NumbersPair(x, y);
 
-		x = this.CoordinatesDrawNormal.x;
-		y = this.CoordinatesDrawNormal.y + this.DimensionsTile.y + this.DimensionsGapBetweenComponents.y;
+		x = this.CoordinatesDeckNormal.x;
+		y = this.CoordinatesDeckNormal.y + this.DimensionsTile.y + this.DimensionsGapBetweenComponents.y;
+		this.CoordinatesDrawNormal = new NumbersPair(x, y);
+
+		x = this.CoordinatesDeckSafe.x;
+		y = this.CoordinatesDrawNormal.y;
 		this.CoordinatesTextPanel = new NumbersPair(x, y);
+
+		x = this.DimensionsFrame.x - this.gapBetweenBorders - 7 * this.DimensionsTile.x
+				- 6 * this.DimensionsGapBetweenComponents.x;
+		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y;
+		this.CoordinatesBoardMinusOne = new NumbersPair(x, y);
 
 	}
 

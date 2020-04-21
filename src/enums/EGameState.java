@@ -9,6 +9,8 @@ public enum EGameState {
 	RESTART_GAME(new RestartGame()),
 	DRAW_PHASE(new DrawPhase()),
 	HANDLE_TILE_TO_PLAY(new HandleTileToPlay()),
+	HANDLE_TILE_TO_PLAY_DEFENDER(new HandleTileToPlayDefender()),
+	HANDLE_TILE_TO_PLAY_TRAITOR(new HandleTileToPlayTraitor()),
 
 	;
 

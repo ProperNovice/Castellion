@@ -11,8 +11,20 @@ public class HashMap<K, V> implements Iterable<K> {
 		this.hashMap = new java.util.HashMap<>();
 	}
 
-	public V get(K key) {
+	public V getValue(K key) {
 		return this.hashMap.get(key);
+	}
+
+	public K getKey(V value) {
+
+		K key = null;
+
+		for (K k : this)
+			if (getValue(k).equals(value))
+				key = k;
+
+		return key;
+
 	}
 
 	public V put(K key, V value) {
@@ -64,7 +76,7 @@ public class HashMap<K, V> implements Iterable<K> {
 		HashMap<K, V> hashMapClone = new HashMap<K, V>();
 
 		for (K key : this)
-			hashMapClone.put(key, this.get(key));
+			hashMapClone.put(key, this.getValue(key));
 
 		return hashMapClone;
 

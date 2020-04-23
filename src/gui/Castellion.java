@@ -16,6 +16,7 @@ import utils.Animation;
 import utils.Executor;
 import utils.Logger;
 import utils.NumbersPair;
+import utils.ObjectPool;
 import utils.ShutDown;
 
 public class Castellion extends Application {
@@ -78,6 +79,9 @@ public class Castellion extends Application {
 
 					else if (keyCode.equals(KeyCode.BACK_QUOTE))
 						Flow.INSTANCE.executeGameState(EGameState.RESTART_GAME);
+
+					else if (keyCode.equals(KeyCode.O))
+						ObjectPool.INSTANCE.print();
 
 					else if (Animation.INSTANCE.isAnimatingSynchronous())
 						return;

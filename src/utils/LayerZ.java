@@ -23,7 +23,7 @@ public enum LayerZ {
 	public void addImageViewAbleToLayer(ImageView imageView, ELayerZ eLayerZ,
 			javafx.scene.image.ImageView imageViewFX) {
 
-		this.layerZ.get(eLayerZ).addLast(imageView);
+		this.layerZ.getValue(eLayerZ).addLast(imageView);
 		this.listImageViewsFX.put(imageView, imageViewFX);
 
 	}
@@ -50,7 +50,7 @@ public enum LayerZ {
 
 		for (ELayerZ eLayerZ : ELayerZ.values()) {
 
-			ArrayList<ImageView> list = this.layerZ.get(eLayerZ);
+			ArrayList<ImageView> list = this.layerZ.getValue(eLayerZ);
 
 			if (!list.contains(imageView))
 				continue;
@@ -68,8 +68,8 @@ public enum LayerZ {
 	private void toFront() {
 
 		for (ELayerZ eLayerZ : ELayerZ.values())
-			for (ImageView imageView : this.layerZ.get(eLayerZ))
-				this.listImageViewsFX.get(imageView).toFront();
+			for (ImageView imageView : this.layerZ.getValue(eLayerZ))
+				this.listImageViewsFX.getValue(imageView).toFront();
 
 	}
 

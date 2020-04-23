@@ -7,6 +7,7 @@ public enum Credentials {
 	INSTANCE;
 
 	public final String primaryStageTitle = "Castellion";
+	public final double SELECT_IMAGEVIEW_WIDTH = 1.0 / 2;
 	public NumbersPair DimensionsFrame, DimensionsGapBetweenComponents, DimensionsTile, DimensionsTileAndGap;
 	public NumbersPair CoordinatesTextPanel, CoordinatesDeckNormal, CoordinatesDeckSafe, CoordinatesDrawNormal,
 			CoordinatesDrawSeer, CoordinatesBoardFirstTile, CoordinatesDiscardPile;
@@ -53,7 +54,7 @@ public enum Credentials {
 				- 3 * (this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x) - this.DimensionsTile.x / 2;
 		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y / 2;
 		this.CoordinatesBoardFirstTile = new NumbersPair(x, y);
-		
+
 		x = this.gapBetweenBorders;
 		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y;
 		this.CoordinatesDiscardPile = new NumbersPair(x, y);

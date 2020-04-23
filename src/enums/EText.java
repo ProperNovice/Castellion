@@ -16,6 +16,8 @@ public enum EText {
 	USE_ABILITY("Use ability", TextTypeEnum.OPTION),
 	CONTINUE_WITHOUT_RESOLVING("Continue without resolving", TextTypeEnum.OPTION),
 	CHOOSE_TILE_PILE_TO_ADD_FROM("Choose tile pile to add from", TextTypeEnum.INDICATOR),
+	SELECT_FIRST_TILE("Select first tile", TextTypeEnum.INDICATOR),
+	SELECT_SECOND_TILE("Select second tile", TextTypeEnum.INDICATOR),
 
 	;
 

@@ -34,6 +34,7 @@ public class StartGame extends AGameState {
 		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 3);
 		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 2);
 		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
+		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
 		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 1);
 		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 1);
 		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);

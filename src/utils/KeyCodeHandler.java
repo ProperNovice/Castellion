@@ -24,7 +24,7 @@ public enum KeyCodeHandler {
 	public int getKeyCodeInt(KeyCode keyCode) {
 
 		if (this.keyCodes.containsKey(keyCode))
-			return this.keyCodes.get(keyCode);
+			return this.keyCodes.getValue(keyCode);
 		else
 			return -1;
 

@@ -12,6 +12,7 @@ public class ImageView implements INode {
 	private double widthOriginal, heightOriginal, scale = 1, xClip = 0, yClip = 0;
 	private EventHandler eventHandler = null;
 	private double rotateValue = 0;
+	private EventHandlerAble eventHandlerAble = null;
 
 	public ImageView(String path, Object object) {
 
@@ -59,8 +60,10 @@ public class ImageView implements INode {
 		LayerZ.INSTANCE.addImageViewAbleToLayer(this, eLayerZ, this.imageView);
 		LayerZ.INSTANCE.toFrontImageview(this);
 
-		if (object instanceof EventHandlerAble)
-			this.setEventHandler((EventHandlerAble) object);
+		if (object instanceof EventHandlerAble) {
+			this.eventHandlerAble = (EventHandlerAble) object;
+			this.setEventHandler(this.eventHandlerAble);
+		}
 
 	}
 
@@ -329,6 +332,10 @@ public class ImageView implements INode {
 
 	public double getEventY() {
 		return this.eventHandler.getMouseEvent().getY() * this.scale;
+	}
+
+	public EventHandlerAble geteEventHandlerAble() {
+		return this.eventHandlerAble;
 	}
 
 }

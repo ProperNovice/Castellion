@@ -11,6 +11,7 @@ import utils.LineCast;
 import utils.NumbersPair;
 import utils.ObjectPool;
 import utils.RealTimeDuplicateProtection;
+import utils.SelectImageViewManager;
 
 public enum Board {
 
@@ -18,7 +19,7 @@ public enum Board {
 
 	public ArrayList<Tile> listBoard = new ArrayList<Tile>(36);
 	public ArrayList<TileEmpty> listEmptyTiles = new ArrayList<TileEmpty>();
-	public ArrayList<Tile> listFoundation = new ArrayList<Tile>(6);
+	private ArrayList<Tile> listFoundation = new ArrayList<Tile>(6);
 	private HashMap<Integer, NumbersPair> columnCoordinates = new HashMap<Integer, NumbersPair>();
 	private HashMap<Integer, ArrayList<NumbersPair>> groupCoordinates = new HashMap<Integer, ArrayList<NumbersPair>>();
 
@@ -54,57 +55,57 @@ public enum Board {
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(2));
+		list.addLast(this.columnCoordinates.getValue(2));
 		this.groupCoordinates.put(group, list);
 
 		// 2
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(2));
-		list.addLast(this.columnCoordinates.get(3));
+		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
 		this.groupCoordinates.put(group, list);
 
 		// 3
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(1));
-		list.addLast(this.columnCoordinates.get(2));
-		list.addLast(this.columnCoordinates.get(3));
+		list.addLast(this.columnCoordinates.getValue(1));
+		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
 		this.groupCoordinates.put(group, list);
 
 		// 4
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(1));
-		list.addLast(this.columnCoordinates.get(2));
-		list.addLast(this.columnCoordinates.get(3));
-		list.addLast(this.columnCoordinates.get(4));
+		list.addLast(this.columnCoordinates.getValue(1));
+		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
+		list.addLast(this.columnCoordinates.getValue(4));
 		this.groupCoordinates.put(group, list);
 
 		// 5
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(0));
-		list.addLast(this.columnCoordinates.get(1));
-		list.addLast(this.columnCoordinates.get(2));
-		list.addLast(this.columnCoordinates.get(3));
-		list.addLast(this.columnCoordinates.get(4));
+		list.addLast(this.columnCoordinates.getValue(0));
+		list.addLast(this.columnCoordinates.getValue(1));
+		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
+		list.addLast(this.columnCoordinates.getValue(4));
 		this.groupCoordinates.put(group, list);
 
 		// 6
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.get(0));
-		list.addLast(this.columnCoordinates.get(1));
-		list.addLast(this.columnCoordinates.get(2));
-		list.addLast(this.columnCoordinates.get(3));
-		list.addLast(this.columnCoordinates.get(4));
-		list.addLast(this.columnCoordinates.get(5));
+		list.addLast(this.columnCoordinates.getValue(0));
+		list.addLast(this.columnCoordinates.getValue(1));
+		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
+		list.addLast(this.columnCoordinates.getValue(4));
+		list.addLast(this.columnCoordinates.getValue(5));
 		this.groupCoordinates.put(group, list);
 
 	}
@@ -113,10 +114,10 @@ public enum Board {
 
 		this.listBoard.addLast(tile);
 
-		Tile firstTile = LineCast.INSTANCE.objectAtCoordinates(this.columnCoordinates.get(column));
+		Tile firstTile = LineCast.INSTANCE.objectAtCoordinates(this.columnCoordinates.getValue(column));
 
 		if (firstTile == null) {
-			tile.getImageView().relocateCenter(this.columnCoordinates.get(column));
+			tile.getImageView().relocateCenter(this.columnCoordinates.getValue(column));
 			return;
 		}
 
@@ -268,7 +269,7 @@ public enum Board {
 		createFoundationList();
 		int columns = this.listFoundation.size();
 
-		ArrayList<NumbersPair> coordinates = this.groupCoordinates.get(columns);
+		ArrayList<NumbersPair> coordinates = this.groupCoordinates.getValue(columns);
 
 		for (int counter = 0; counter < columns; counter++) {
 
@@ -299,6 +300,49 @@ public enum Board {
 
 		createFoundationList();
 		return this.listFoundation.size();
+
+	}
+
+	public void setTilesCanResolvedbyJuggler() {
+
+		ArrayList<Tile> lineCast = new ArrayList<Tile>();
+		ArrayList<Tile> listBoardClone = this.listBoard.clone();
+
+		for (Tile tile : listBoardClone.clone()) {
+
+			lineCast = LineCast.INSTANCE.lineCast(tile, DirectionEnum.RIGHT, 1);
+
+			if (!lineCast.isEmpty()) {
+
+				listBoardClone.remove(tile);
+				listBoardClone.remove(lineCast.getFirst());
+
+				if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+					SelectImageViewManager.INSTANCE.addSelectImageView(tile);
+
+				if (!SelectImageViewManager.INSTANCE.hasSelectImageView(lineCast.getFirst()))
+					SelectImageViewManager.INSTANCE.addSelectImageView(lineCast.getFirst());
+
+			} else {
+
+				lineCast = LineCast.INSTANCE.lineCast(tile, DirectionEnum.LEFT, 1);
+
+				if (!lineCast.isEmpty()) {
+
+					listBoardClone.remove(tile);
+					listBoardClone.remove(lineCast.getFirst());
+
+					if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+						SelectImageViewManager.INSTANCE.addSelectImageView(tile);
+
+					if (!SelectImageViewManager.INSTANCE.hasSelectImageView(lineCast.getFirst()))
+						SelectImageViewManager.INSTANCE.addSelectImageView(lineCast.getFirst());
+
+				}
+
+			}
+
+		}
 
 	}
 

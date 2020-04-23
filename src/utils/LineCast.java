@@ -183,7 +183,7 @@ public enum LineCast {
 
 		for (ImageViewAble imageViewAble : MapImageViews.INSTANCE.getImageViewsMap()) {
 
-			ImageView imageView = MapImageViews.INSTANCE.getImageViewsMap().get(imageViewAble);
+			ImageView imageView = MapImageViews.INSTANCE.getImageViewsMap().getValue(imageViewAble);
 
 			if (!imageView.isVisible())
 				continue;

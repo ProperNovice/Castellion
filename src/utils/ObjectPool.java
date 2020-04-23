@@ -7,9 +7,10 @@ public enum ObjectPool {
 	INSTANCE;
 
 	private HashMap<Class<?>, ArrayList<Object>> objectPool = new HashMap<>();
+	private HashMap<Class<?>, Integer> objectPoolCounter = new HashMap<>();
 
 	public void release(Object object) {
-		this.objectPool.get(object.getClass()).addLast(object);
+		this.objectPool.getValue(object.getClass()).addLast(object);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -20,10 +21,10 @@ public enum ObjectPool {
 
 		T t = null;
 
-		if (this.objectPool.get(objectClass).isEmpty())
+		if (this.objectPool.getValue(objectClass).isEmpty())
 			t = createNewObject(objectClass);
 		else
-			t = (T) this.objectPool.get(objectClass).removeFirst();
+			t = (T) this.objectPool.getValue(objectClass).removeFirst();
 
 		return t;
 
@@ -33,6 +34,14 @@ public enum ObjectPool {
 
 		try {
 
+			int objectsCreated = 0;
+
+			if (this.objectPoolCounter.containsKey(objectClass))
+				objectsCreated = this.objectPoolCounter.getValue(objectClass);
+
+			objectsCreated++;
+			this.objectPoolCounter.put(objectClass, objectsCreated);
+
 			return (T) objectClass.getConstructor().newInstance();
 
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -40,7 +49,27 @@ public enum ObjectPool {
 			e.printStackTrace();
 		}
 
+		ShutDown.INSTANCE.execute(this);
 		return null;
+
+	}
+
+	public void print() {
+
+		String stars = "************";
+
+		Logger.INSTANCE.log(stars);
+		Logger.INSTANCE.log("object pool");
+
+		for (Class<?> classObject : this.objectPool) {
+
+			Logger.INSTANCE.newLine();
+			Logger.INSTANCE.log(classObject);
+			Logger.INSTANCE.log(this.objectPoolCounter.getValue(classObject));
+
+		}
+
+		Logger.INSTANCE.logNewLine(stars);
 
 	}
 

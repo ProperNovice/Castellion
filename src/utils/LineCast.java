@@ -1,5 +1,7 @@
 package utils;
 
+import controller.Credentials;
+
 public enum LineCast {
 
 	INSTANCE;
@@ -8,41 +10,105 @@ public enum LineCast {
 	private ArrayList<ImageViewAble> listLineCast = new ArrayList<ImageViewAble>();
 	private ArrayList<ImageViewAble> listStarting = new ArrayList<ImageViewAble>();
 
-	public ArrayList<ImageViewAble> lineCastCoordinates(double startingX, double startingY, double endingX,
-			double endingY) {
+	public <T> ArrayList<T> lineCast(ImageViewAble imageViewAble, DirectionEnum directionEnum, int units) {
 
-		this.listLineCast.clear();
-		this.listStarting.clear();
+		ImageView imageView = imageViewAble.getImageView();
+
+		double startingX = imageView.getCenterX();
+		double startingY = imageView.getCenterY();
+		double width = imageView.getWidth();
+		double height = imageView.getHeight();
+		NumbersPair dimensions = new NumbersPair(width, height);
+
+		return lineCast(startingX, startingY, dimensions, directionEnum, units);
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> lineCast(double startingX, double startingY, NumbersPair dimensions,
+			DirectionEnum directionEnum, int units) {
+
+		this.startingX = startingX;
+		this.startingY = startingY;
+
+		setUpCredentials(startingX, startingY, dimensions, directionEnum, units);
+
+		executeLineCast();
+		return (ArrayList<T>) this.listLineCast;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> lineCast(double startingX, double startingY, double endingX, double endingY) {
 
 		this.startingX = startingX;
 		this.startingY = startingY;
 		this.endingX = endingX;
 		this.endingY = endingY;
 
-		setStepAxis();
+		executeLineCast();
+		return (ArrayList<T>) this.listLineCast;
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T objectAtCoordinates(double x, double y) {
+
+		ArrayList<ImageViewAble> list = getImageViewAbleContaining(x, y);
+
+		if (list.isEmpty())
+			return null;
+		else
+			return (T) list.getFirst();
+
+	}
+
+	public <T> T objectAtCoordinates(NumbersPair numbersPair) {
+		return objectAtCoordinates(numbersPair.x, numbersPair.y);
+	}
+
+	private void setUpCredentials(double startingX, double startingY, NumbersPair dimensions,
+			DirectionEnum directionEnum, int units) {
+
+		this.startingX = startingX;
+		this.startingY = startingY;
+		this.endingX = this.startingX;
+		this.endingY = this.startingY;
+
+		double width = units * (dimensions.x + Credentials.INSTANCE.DimensionsGapBetweenComponents.x);
+		double height = units * (dimensions.y + Credentials.INSTANCE.DimensionsGapBetweenComponents.x);
+
+		switch (directionEnum) {
+
+		case DOWN:
+			this.endingY += height;
+			break;
+
+		case LEFT:
+			this.endingX -= width;
+			break;
+
+		case RIGHT:
+			this.endingX += width;
+			break;
+
+		case UP:
+			this.endingY -= height;
+			break;
+
+		}
+
+	}
+
+	private void executeLineCast() {
+
+		this.listLineCast.clear();
+		this.listStarting.clear();
+
+		setStepAxis();
 		setListStartingImageViewAble();
 		setListLinecast();
 
-		return this.listLineCast;
-
-	}
-
-	public ArrayList<ImageViewAble> lineCastCoordinates(NumbersPair starting, NumbersPair ending) {
-		return lineCastCoordinates(starting.x, starting.y, ending.x, ending.y);
-	}
-
-	public ArrayList<ImageViewAble> lineCastDimensions(double startingX, double width, double startingY,
-			double height) {
-		return lineCastCoordinates(startingX, startingY, startingX + width, startingY + height);
-	}
-
-	public ArrayList<ImageViewAble> lineCastDimensions(NumbersPair starting, NumbersPair dimensions) {
-		return lineCastCoordinates(starting.x, starting.y, starting.x + dimensions.x, starting.y + dimensions.y);
-	}
-
-	public ArrayList<ImageViewAble> lineCastCoordDimens(double startingX, double startingY, NumbersPair dimensions) {
-		return lineCastCoordinates(startingX, startingY, startingX + dimensions.x, startingY + dimensions.y);
 	}
 
 	private void setStepAxis() {
@@ -77,7 +143,7 @@ public enum LineCast {
 	}
 
 	private void setListStartingImageViewAble() {
-		this.listStarting.addAll(getImageViewAbleContaining(this.startingX, this.endingY));
+		this.listStarting.addAll(getImageViewAbleContaining(this.startingX, this.startingY));
 	}
 
 	private void setListLinecast() {
@@ -107,7 +173,7 @@ public enum LineCast {
 
 			}
 
-		} while (currentX != this.endingX && currentY != this.endingY);
+		} while (currentX != this.endingX || currentY != this.endingY);
 
 	}
 
@@ -118,6 +184,9 @@ public enum LineCast {
 		for (ImageViewAble imageViewAble : MapImageViews.INSTANCE.getImageViewsMap()) {
 
 			ImageView imageView = MapImageViews.INSTANCE.getImageViewsMap().get(imageViewAble);
+
+			if (!imageView.isVisible())
+				continue;
 
 			if (!imageView.contains(x, y))
 				continue;

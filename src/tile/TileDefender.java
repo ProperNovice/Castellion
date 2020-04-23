@@ -2,8 +2,10 @@ package tile;
 
 import enums.EDefenderFaction;
 import enums.EShapeType;
+import interfaces.IShapeTypeAble;
+import utils.Logger;
 
-public class TileDefender extends Tile {
+public class TileDefender extends Tile implements IShapeTypeAble {
 
 	private EDefenderFaction eDefenderFaction = null;
 	private EShapeType eShapeType = null;
@@ -22,10 +24,19 @@ public class TileDefender extends Tile {
 		return this.eDefenderFaction.getFileName() + this.eShapeType.getFileName();
 	}
 
+	@Override
+	protected void printCredentials() {
+
+		Logger.INSTANCE.log(this.eDefenderFaction);
+		Logger.INSTANCE.log(this.eShapeType);
+
+	}
+
 	public EDefenderFaction getDefenderFaction() {
 		return this.eDefenderFaction;
 	}
 
+	@Override
 	public EShapeType getShapeType() {
 		return this.eShapeType;
 	}

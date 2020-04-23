@@ -11,6 +11,11 @@ public enum EText {
 	NORMAL("Normal", TextTypeEnum.OPTION),
 	SAFE("Safe", TextTypeEnum.OPTION),
 	CHOOSE_A_SEER_TILE("Choose a Seer tile", TextTypeEnum.INDICATOR),
+	PLACE_TILE("Place tile", TextTypeEnum.INDICATOR),
+	DISCARD_TILE("Discard tile", TextTypeEnum.OPTION),
+	USE_ABILITY("Use ability", TextTypeEnum.OPTION),
+	CONTINUE_WITHOUT_RESOLVING("Continue without resolving", TextTypeEnum.OPTION),
+	CHOOSE_TILE_PILE_TO_ADD_FROM("Choose tile pile to add from", TextTypeEnum.INDICATOR),
 
 	;
 

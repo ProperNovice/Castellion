@@ -4,6 +4,7 @@ import controller.Lists;
 import enums.EText;
 import javafx.scene.input.KeyCode;
 import tile.Tile;
+import tile.TileDefender;
 import tile.TileEmpty;
 import utils.KeyCodeHandler;
 import utils.Logger;
@@ -51,8 +52,8 @@ public abstract class AGameState {
 			handleTileDeckSafePressed(tile);
 		else if (tile instanceof TileEmpty)
 			handleTileEmptyPressed(tile);
-		else if (Lists.INSTANCE.board.contains(tile))
-			handleTileBoardPressed(tile);
+		else if (Lists.INSTANCE.board.listBoard.contains(tile))
+			handleTileBoardPressedNonEmpty((TileDefender) tile);
 
 	}
 
@@ -72,7 +73,7 @@ public abstract class AGameState {
 
 	}
 
-	protected void handleTileBoardPressed(Tile tile) {
+	protected void handleTileBoardPressedNonEmpty(TileDefender tile) {
 
 	}
 

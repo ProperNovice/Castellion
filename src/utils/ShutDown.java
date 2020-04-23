@@ -19,4 +19,11 @@ public enum ShutDown {
 
 	}
 
+	public void execute(Object object) {
+
+		Logger.INSTANCE.logNewLine(object.getClass());
+		execute();
+
+	}
+
 }

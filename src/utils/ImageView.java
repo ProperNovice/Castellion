@@ -12,7 +12,6 @@ public class ImageView implements INode {
 	private double widthOriginal, heightOriginal, scale = 1, xClip = 0, yClip = 0;
 	private EventHandler eventHandler = null;
 	private double rotateValue = 0;
-	private Object object = null;
 
 	public ImageView(String path, Object object) {
 
@@ -43,8 +42,6 @@ public class ImageView implements INode {
 	}
 
 	private void createAndAddNode(Object object, ELayerZ eLayerZ) {
-
-		this.object = object;
 
 		ImageViewAble imageViewAble = (ImageViewAble) object;
 
@@ -332,46 +329,6 @@ public class ImageView implements INode {
 
 	public double getEventY() {
 		return this.eventHandler.getMouseEvent().getY() * this.scale;
-	}
-
-	public Object getObject() {
-		return this.object;
-	}
-
-	public ArrayList<Object> lineCast(DirectionEnum directionEnum) {
-
-		double endingX = getLayoutX(), endingY = getLayoutY();
-
-		switch (directionEnum) {
-
-		case UP:
-			endingY -= getHeight();
-			break;
-
-		case DOWN:
-			endingY += getHeight();
-			break;
-
-		case LEFT:
-			endingX -= getWidth();
-			break;
-
-		case RIGHT:
-			endingX += getWidth();
-			break;
-
-		}
-
-		ArrayList<ImageViewAble> listImageViewAble = LineCast.INSTANCE.lineCastCoordinates(getCenterX(), getCenterY(),
-				endingX, endingY);
-
-		ArrayList<Object> listObject = new ArrayList<Object>();
-
-		for (ImageViewAble imageViewAble : listImageViewAble)
-			listObject.addLast(MapImageViews.INSTANCE.getImageViewsMap().get(imageViewAble).getObject());
-
-		return listObject;
-
 	}
 
 }

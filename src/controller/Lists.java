@@ -16,7 +16,7 @@ public enum Lists implements ISaveLoadStateAble {
 	INSTANCE;
 
 	public ArrayList<ISaveLoadStateAble> iSaveLoadStateAbles = new ArrayList<ISaveLoadStateAble>();
-	public ListImageViewAbles<Tile> deckNormal, deckSafe, drawNormal, drawSeer;
+	public ListImageViewAbles<Tile> deckNormal, deckSafe, drawNormal, drawSeer, discardPile;
 	public Board board = null;
 
 	public void instantiate() {
@@ -93,6 +93,12 @@ public enum Lists implements ISaveLoadStateAble {
 		// board
 
 		this.board = Board.INSTANCE;
+
+		// discard pile
+
+		this.discardPile = new ListImageViewAbles<Tile>(
+				new CoordinatesBuilder().coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDiscardPile)
+						.rearrangeTypeEnum(RearrangeTypeEnum.STATIC).build());
 
 	}
 

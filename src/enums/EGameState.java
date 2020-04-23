@@ -11,6 +11,9 @@ public enum EGameState {
 	HANDLE_TILE_TO_PLAY(new HandleTileToPlay()),
 	HANDLE_TILE_TO_PLAY_DEFENDER(new HandleTileToPlayDefender()),
 	HANDLE_TILE_TO_PLAY_TRAITOR(new HandleTileToPlayTraitor()),
+	HANDLE_TILE_DISCARDED(new HandleTileDiscarded()),
+	RESOLVE_SEER(new ResolveSeer()),
+	RESOLVE_JUGGLER(new ResolveJuggler()),
 
 	;
 

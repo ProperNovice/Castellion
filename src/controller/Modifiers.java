@@ -9,16 +9,16 @@ public enum Modifiers implements ISaveLoadStateAble {
 
 	private Tile tileToPlay = null;
 
+	private Modifiers() {
+		saveStart();
+	}
+
 	public void setTileToPlay(Tile tileToPlay) {
 		this.tileToPlay = tileToPlay;
 	}
 
 	public Tile getTileToPlay() {
 		return this.tileToPlay;
-	}
-
-	private Modifiers() {
-		saveStart();
 	}
 
 	@Override

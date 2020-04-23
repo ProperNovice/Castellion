@@ -41,8 +41,9 @@ public class StartGame extends AGameState {
 		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
 //		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 5);
 
+		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_JUGGLER);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_SEER);
-		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_DISCARDED);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_DISCARDED);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_TO_PLAY);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.DRAW_PHASE);
 

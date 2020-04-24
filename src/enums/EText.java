@@ -16,8 +16,12 @@ public enum EText {
 	USE_ABILITY("Use ability", TextTypeEnum.OPTION),
 	CONTINUE_WITHOUT_RESOLVING("Continue without resolving", TextTypeEnum.OPTION),
 	CHOOSE_TILE_PILE_TO_ADD_FROM("Choose tile pile to add from", TextTypeEnum.INDICATOR),
+	CHOOSE_TILE_TO_DESTROY("Choose tile to destroy", TextTypeEnum.INDICATOR),
 	SELECT_FIRST_TILE("Select first tile", TextTypeEnum.INDICATOR),
 	SELECT_SECOND_TILE("Select second tile", TextTypeEnum.INDICATOR),
+	CHOOSE_TILE_TO_RECOVER("Choose tile to recover", TextTypeEnum.INDICATOR),
+	CHOOSE_TILE_TO_MOVE("Choose tile to move", TextTypeEnum.INDICATOR),
+	CHOOSE_PLACE_TO_MOVE_TO("Choose place to move to", TextTypeEnum.INDICATOR),
 
 	;
 

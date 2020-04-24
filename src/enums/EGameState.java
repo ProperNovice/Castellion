@@ -14,6 +14,9 @@ public enum EGameState {
 	HANDLE_TILE_DISCARDED(new HandleTileDiscarded()),
 	RESOLVE_SEER(new ResolveSeer()),
 	RESOLVE_JUGGLER(new ResolveJuggler()),
+	RESOLVE_CHAMELEON(new ResolveChameleon()),
+	RESOLVE_PYRO_DESTROY(new ResolvePyroDestroy()),
+	RESOLVE_PYRO_MOVE(new ResolvePyroMove()),
 
 	;
 

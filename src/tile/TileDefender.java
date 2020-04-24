@@ -2,10 +2,11 @@ package tile;
 
 import enums.EDefenderFaction;
 import enums.EShapeType;
+import interfaces.IDefenderFactionAble;
 import interfaces.IShapeTypeAble;
 import utils.Logger;
 
-public class TileDefender extends Tile implements IShapeTypeAble {
+public class TileDefender extends Tile implements IShapeTypeAble, IDefenderFactionAble {
 
 	private EDefenderFaction eDefenderFaction = null;
 	private EShapeType eShapeType = null;
@@ -32,6 +33,7 @@ public class TileDefender extends Tile implements IShapeTypeAble {
 
 	}
 
+	@Override
 	public EDefenderFaction getDefenderFaction() {
 		return this.eDefenderFaction;
 	}

@@ -26,23 +26,40 @@ public class StartGame extends AGameState {
 //		addTileToDrawNormalProceed(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
 
 		addTileToDiscardPile(EDefenderFaction.JUGGLER, EShapeType.CIRCLE);
+		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
+		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
+		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
+		addTileToDiscardPile(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
+		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
 
-		leaveTilesToList(Lists.INSTANCE.deckNormal, 2);
-		leaveTilesToList(Lists.INSTANCE.deckSafe, 1);
+//		leaveTilesToList(Lists.INSTANCE.deckNormal, 2);
+//		leaveTilesToList(Lists.INSTANCE.deckSafe, 1);
 
-		addTileToBoard(EDefenderFaction.SEER, EShapeType.SQUARE, 3);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 3);
-		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 2);
 		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
-		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 1);
-		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 1);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
+		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 1);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.TRIANGLE, 1);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 1);
+		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
+//		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 2);
+//		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
+		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 3);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 3);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.SQUARE, 3);
 		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);
-		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 4);
-		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
-//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 5);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 4);
+//		addTileToBoard(EDefenderFaction.SEER, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
+		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.SQUARE, 5);
+		Lists.INSTANCE.board.relocateBoard();
 
-		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_JUGGLER);
+		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_PYRO_MOVE);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_PYRO_DESTROY);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_CHAMELEON);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_JUGGLER);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_SEER);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_DISCARDED);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_TO_PLAY);

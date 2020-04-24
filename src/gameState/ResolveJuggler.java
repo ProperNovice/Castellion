@@ -47,8 +47,8 @@ public class ResolveJuggler extends AGameState implements ImageViewAble {
 	private void handleOneTileSelected() {
 
 		ArrayList<Tile> lineCast = new ArrayList<Tile>();
-		lineCast.addAll(LineCast.INSTANCE.lineCast(this.selected.getFirst(), DirectionEnum.LEFT, 1));
-		lineCast.addAll(LineCast.INSTANCE.lineCast(this.selected.getFirst(), DirectionEnum.RIGHT, 1));
+		lineCast.addAll(LineCast.INSTANCE.lineCastList(this.selected.getFirst(), DirectionEnum.LEFT, 1));
+		lineCast.addAll(LineCast.INSTANCE.lineCastList(this.selected.getFirst(), DirectionEnum.RIGHT, 1));
 
 		for (Tile tile : lineCast)
 			SelectImageViewManager.INSTANCE.addSelectImageView(tile);

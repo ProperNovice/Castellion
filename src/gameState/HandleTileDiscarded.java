@@ -6,6 +6,9 @@ import controller.Modifiers;
 import enums.EDefenderFaction;
 import enums.EGameState;
 import enums.EText;
+import interfaces.IDefenderFactionAble;
+import interfaces.IShapeTypeAble;
+import tile.Tile;
 import tile.TileDefender;
 import utils.Logger;
 
@@ -36,6 +39,7 @@ public class HandleTileDiscarded extends AGameState {
 		switch (this.eDefenderFaction) {
 
 		case CHAMELEON:
+			eGameState = EGameState.RESOLVE_CHAMELEON;
 			break;
 
 		case JUGGLER:
@@ -43,6 +47,7 @@ public class HandleTileDiscarded extends AGameState {
 			break;
 
 		case PYRO:
+			eGameState = EGameState.RESOLVE_PYRO_DESTROY;
 			break;
 
 		case SEER:
@@ -57,14 +62,17 @@ public class HandleTileDiscarded extends AGameState {
 
 	private boolean abilityTileCanBeUsed() {
 
-		TileDefender tileDefender = (TileDefender) Modifiers.INSTANCE.getTileToPlay();
-		this.eDefenderFaction = tileDefender.getDefenderFaction();
+		Tile tile = Modifiers.INSTANCE.getTileToPlay();
+
+		IDefenderFactionAble iDefenderFactionAble = (IDefenderFactionAble) Modifiers.INSTANCE.getTileToPlay();
+		this.eDefenderFaction = iDefenderFactionAble.getDefenderFaction();
+
 		boolean canBeResolved = true;
 
 		switch (this.eDefenderFaction) {
 
 		case CHAMELEON:
-			canBeResolved = chameleonCanBeResolved();
+			canBeResolved = chameleonCanBeResolved(tile);
 			break;
 
 		case JUGGLER:
@@ -100,7 +108,28 @@ public class HandleTileDiscarded extends AGameState {
 
 	}
 
-	private boolean chameleonCanBeResolved() {
+	private boolean chameleonCanBeResolved(Tile tile) {
+
+		IShapeTypeAble iShapeTypeAble = (IShapeTypeAble) tile;
+		IDefenderFactionAble iDefenderFactionAble = (IDefenderFactionAble) tile;
+
+		for (Tile tileTemp : Lists.INSTANCE.discardPile) {
+
+			if (!(tileTemp instanceof TileDefender))
+				continue;
+
+			TileDefender tileDefenderTemp = (TileDefender) tileTemp;
+
+			if (!iShapeTypeAble.getShapeType().equals(tileDefenderTemp.getShapeType()))
+				continue;
+
+			if (iDefenderFactionAble.getDefenderFaction().equals(tileDefenderTemp.getDefenderFaction()))
+				continue;
+
+			return true;
+
+		}
+
 		return false;
 	}
 
@@ -109,7 +138,7 @@ public class HandleTileDiscarded extends AGameState {
 	}
 
 	private boolean pyroCanBeResolved() {
-		return false;
+		return !Lists.INSTANCE.board.listBoard.isEmpty();
 	}
 
 }

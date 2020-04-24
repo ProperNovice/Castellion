@@ -1,6 +1,7 @@
 package controller;
 
 import enums.EShapeType;
+import interfaces.IDefenderFactionAble;
 import interfaces.IShapeTypeAble;
 import tile.Tile;
 import tile.TileEmpty;
@@ -12,6 +13,7 @@ import utils.NumbersPair;
 import utils.ObjectPool;
 import utils.RealTimeDuplicateProtection;
 import utils.SelectImageViewManager;
+import utils.ShutDown;
 
 public enum Board {
 
@@ -55,7 +57,7 @@ public enum Board {
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.getValue(2));
+		list.addLast(this.columnCoordinates.getValue(3));
 		this.groupCoordinates.put(group, list);
 
 		// 2
@@ -70,9 +72,9 @@ public enum Board {
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.getValue(1));
 		list.addLast(this.columnCoordinates.getValue(2));
 		list.addLast(this.columnCoordinates.getValue(3));
+		list.addLast(this.columnCoordinates.getValue(4));
 		this.groupCoordinates.put(group, list);
 
 		// 4
@@ -89,11 +91,11 @@ public enum Board {
 
 		group++;
 		list = new ArrayList<NumbersPair>();
-		list.addLast(this.columnCoordinates.getValue(0));
 		list.addLast(this.columnCoordinates.getValue(1));
 		list.addLast(this.columnCoordinates.getValue(2));
 		list.addLast(this.columnCoordinates.getValue(3));
 		list.addLast(this.columnCoordinates.getValue(4));
+		list.addLast(this.columnCoordinates.getValue(5));
 		this.groupCoordinates.put(group, list);
 
 		// 6
@@ -123,7 +125,7 @@ public enum Board {
 
 		Tile lastTile = firstTile;
 
-		ArrayList<Tile> list = LineCast.INSTANCE.lineCast(firstTile, DirectionEnum.UP, 5);
+		ArrayList<Tile> list = LineCast.INSTANCE.lineCastList(firstTile, DirectionEnum.UP, 5);
 
 		if (!list.isEmpty())
 			lastTile = list.getLast();
@@ -152,8 +154,12 @@ public enum Board {
 
 		createFoundationList();
 
-		if (!this.listFoundation.isMaxedCapacity())
-			placeEmptyTilesAtFoundationEdges();
+		if (!this.listFoundation.isMaxedCapacity()) {
+
+			placeEmptyTilesAtFoundationEdge(DirectionEnum.LEFT);
+			placeEmptyTilesAtFoundationEdge(DirectionEnum.RIGHT);
+
+		}
 
 		placeEmptyTilesAtPopulatedColumns();
 
@@ -169,21 +175,34 @@ public enum Board {
 		startingX -= 4 * unitX;
 		double startingY = Credentials.INSTANCE.CoordinatesBoardFirstTile.y;
 
-		this.listFoundation.addAll(LineCast.INSTANCE.lineCast(startingX, startingY, Credentials.INSTANCE.DimensionsTile,
-				DirectionEnum.RIGHT, 7));
+		this.listFoundation.addAll(LineCast.INSTANCE.lineCastList(startingX, startingY,
+				Credentials.INSTANCE.DimensionsTile, DirectionEnum.RIGHT, 8));
 
 	}
 
-	private void placeEmptyTilesAtFoundationEdges() {
+	private void placeEmptyTilesAtFoundationEdge(DirectionEnum directionEnum) {
 
-		double x, y = Credentials.INSTANCE.CoordinatesBoardFirstTile.y;
+		Tile tile = null;
+		double x = 0, y = Credentials.INSTANCE.CoordinatesBoardFirstTile.y;
 
-		Tile tileLeft = this.listFoundation.getFirst();
-		x = tileLeft.getImageView().getCenterX() - Credentials.INSTANCE.DimensionsTileAndGap.x;
-		placeEmptyTileToCoordinates(x, y);
+		switch (directionEnum) {
 
-		Tile tileRight = this.listFoundation.getLast();
-		x = tileRight.getImageView().getCenterX() + Credentials.INSTANCE.DimensionsTileAndGap.x;
+		case LEFT:
+			tile = this.listFoundation.getFirst();
+			x = tile.getImageView().getCenterX() - Credentials.INSTANCE.DimensionsTileAndGap.x;
+			break;
+
+		case RIGHT:
+			tile = this.listFoundation.getLast();
+			x = tile.getImageView().getCenterX() + Credentials.INSTANCE.DimensionsTileAndGap.x;
+			break;
+
+		default:
+			ShutDown.INSTANCE.execute(this);
+			break;
+
+		}
+
 		placeEmptyTileToCoordinates(x, y);
 
 	}
@@ -209,7 +228,10 @@ public enum Board {
 
 		for (Tile tile : this.listFoundation) {
 
-			ArrayList<Tile> list = LineCast.INSTANCE.lineCast(tile, DirectionEnum.UP, 5);
+			ArrayList<Tile> list = LineCast.INSTANCE.lineCastList(tile, DirectionEnum.UP, 5);
+
+			if (list.size() == 5)
+				continue;
 
 			double tileCoordinateX = tile.getImageView().getCenterX();
 			double tileCoordinateY = tile.getImageView().getCenterY()
@@ -217,11 +239,11 @@ public enum Board {
 
 			ArrayList<Tile> adjacents = new ArrayList<Tile>();
 
-			adjacents.addAll(LineCast.INSTANCE.lineCast(tileCoordinateX, tileCoordinateY,
+			adjacents.addAll(LineCast.INSTANCE.lineCastList(tileCoordinateX, tileCoordinateY,
 					Credentials.INSTANCE.DimensionsTile, DirectionEnum.LEFT, 1));
-			adjacents.addAll(LineCast.INSTANCE.lineCast(tileCoordinateX, tileCoordinateY,
+			adjacents.addAll(LineCast.INSTANCE.lineCastList(tileCoordinateX, tileCoordinateY,
 					Credentials.INSTANCE.DimensionsTile, DirectionEnum.RIGHT, 1));
-			adjacents.addAll(LineCast.INSTANCE.lineCast(tileCoordinateX, tileCoordinateY,
+			adjacents.addAll(LineCast.INSTANCE.lineCastList(tileCoordinateX, tileCoordinateY,
 					Credentials.INSTANCE.DimensionsTile, DirectionEnum.DOWN, 1));
 
 			boolean foundDuplicate = false;
@@ -275,7 +297,7 @@ public enum Board {
 
 			ArrayList<Tile> tiles = new ArrayList<Tile>();
 			tiles.addLast(this.listFoundation.get(counter));
-			tiles.addAll(LineCast.INSTANCE.lineCast(this.listFoundation.get(counter), DirectionEnum.UP, 5));
+			tiles.addAll(LineCast.INSTANCE.lineCastList(this.listFoundation.get(counter), DirectionEnum.UP, 5));
 
 			double x = coordinates.get(counter).x;
 			double y = coordinates.get(counter).y;
@@ -310,7 +332,7 @@ public enum Board {
 
 		for (Tile tile : listBoardClone.clone()) {
 
-			lineCast = LineCast.INSTANCE.lineCast(tile, DirectionEnum.RIGHT, 1);
+			lineCast = LineCast.INSTANCE.lineCastList(tile, DirectionEnum.RIGHT, 1);
 
 			if (!lineCast.isEmpty()) {
 
@@ -325,7 +347,7 @@ public enum Board {
 
 			} else {
 
-				lineCast = LineCast.INSTANCE.lineCast(tile, DirectionEnum.LEFT, 1);
+				lineCast = LineCast.INSTANCE.lineCastList(tile, DirectionEnum.LEFT, 1);
 
 				if (!lineCast.isEmpty()) {
 
@@ -343,6 +365,317 @@ public enum Board {
 			}
 
 		}
+
+	}
+
+	public void setUpTilesCanBeDestroyedByPyro() {
+
+		createFoundationList();
+
+		for (Tile tile : this.listBoard)
+			SelectImageViewManager.INSTANCE.addSelectImageView(tile);
+
+		for (Tile tile : this.listFoundation) {
+
+			if (tile.equals(this.listFoundation.getFirst()))
+				continue;
+
+			if (tile.equals(this.listFoundation.getLast()))
+				continue;
+
+			if (!LineCast.INSTANCE.lineCastList(tile, DirectionEnum.UP, 1).isEmpty())
+				continue;
+
+			SelectImageViewManager.INSTANCE.releaseSelectImageView(tile);
+
+		}
+
+	}
+
+	public void setUpTilesCanBeMovedByPyro() {
+
+		createFoundationList();
+
+		for (Tile tile : this.listFoundation) {
+
+			ArrayList<Tile> list = LineCast.INSTANCE.lineCastList(tile, DirectionEnum.UP, 5);
+
+			if (!list.isEmpty())
+				SelectImageViewManager.INSTANCE.addSelectImageView(list.getLast());
+			else if (this.listFoundation.getFirst().equals(tile))
+				SelectImageViewManager.INSTANCE.addSelectImageView(tile);
+			else if (this.listFoundation.getLast().equals(tile))
+				SelectImageViewManager.INSTANCE.addSelectImageView(tile);
+
+		}
+
+	}
+
+	public void setUpEmptyTilesToMoveByPyro(Tile tile) {
+
+		for (Tile tileTemp : this.listFoundation) {
+
+			ArrayList<Tile> list = LineCast.INSTANCE.lineCastList(tileTemp, DirectionEnum.UP, 5);
+
+			Tile tileLast = tileTemp;
+
+			if (!list.isEmpty())
+				tileLast = list.getLast();
+
+			if (tileLast.equals(tile))
+				continue;
+
+			if (list.size() == 5)
+				continue;
+
+			double x = tileLast.getImageView().getCenterX();
+			double y = tileLast.getImageView().getCenterY();
+			y -= Credentials.INSTANCE.DimensionsTileAndGap.y;
+
+			placeEmptyTileToCoordinates(x, y);
+
+		}
+
+		if (!this.listFoundation.isMaxedCapacity()) {
+
+			placeEmptyTilesAtFoundationEdge(DirectionEnum.LEFT);
+			placeEmptyTilesAtFoundationEdge(DirectionEnum.RIGHT);
+
+		} else {
+
+			if (tile.equals(this.listFoundation.getFirst()))
+				placeEmptyTilesAtFoundationEdge(DirectionEnum.RIGHT);
+			else if (tile.equals(this.listFoundation.getLast()))
+				placeEmptyTilesAtFoundationEdge(DirectionEnum.LEFT);
+
+		}
+
+	}
+
+	public int getBastions() {
+
+		createFoundationList();
+
+		int bastions = 0;
+		Tile tileChecking = null;
+
+		for (Tile tileCurrent : this.listBoard.clone()) {
+
+			// tile bottomLeft
+
+			tileChecking = tileCurrent;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			// tile topLeft
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.UP, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			// tile topRight
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.RIGHT, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			// tile bottomRight
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.DOWN, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			bastions++;
+
+		}
+
+		return bastions;
+
+	}
+
+	public int getLines() {
+
+		int lines = 0;
+
+		Tile tileChecking = null;
+
+		for (Tile tileCurrent : this.listBoard.clone()) {
+
+			// position 1
+
+			tileChecking = tileCurrent;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			// position 2
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.RIGHT, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			// position 3
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.RIGHT, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			// position 4
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.RIGHT, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			lines++;
+
+		}
+
+		return lines;
+
+	}
+
+	public int getTowers() {
+
+		createFoundationList();
+
+		int towers = 0;
+
+		Tile tileChecking = null;
+
+		for (Tile tileCurrent : this.listBoard.clone()) {
+
+			// position 1
+
+			tileChecking = tileCurrent;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.DOWN))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			// position 2
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.UP, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			// position 3
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.UP, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (!tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			// position 4
+
+			tileChecking = (Tile) LineCast.INSTANCE.lineCastSingle(tileChecking, DirectionEnum.UP, 1);
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.LEFT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.RIGHT))
+				continue;
+
+			if (tileHasSameDefenderFactionWithTileBeside(tileChecking, DirectionEnum.UP))
+				continue;
+
+			towers++;
+
+		}
+
+		return towers;
+
+	}
+
+	private boolean tileHasSameDefenderFactionWithTileBeside(Tile tileFirst, DirectionEnum directionEnum) {
+
+		Tile tileSecond = (Tile) LineCast.INSTANCE.lineCastSingle(tileFirst, directionEnum, 1);
+
+		if (tileSecond == null)
+			return false;
+
+		IDefenderFactionAble iDefenderFactionAbleFirst = (IDefenderFactionAble) tileFirst;
+		IDefenderFactionAble iDefenderFactionAbleSecond = (IDefenderFactionAble) tileSecond;
+
+		return iDefenderFactionAbleFirst.getDefenderFaction().equals(iDefenderFactionAbleSecond.getDefenderFaction());
 
 	}
 

@@ -38,6 +38,8 @@ public enum Flow {
 	}
 
 	private void executeGameState() {
+		
+		DefensiveFormationManager.INSTANCE.updateTexts();
 
 		Logger.INSTANCE.log("executing gamestate");
 		Logger.INSTANCE.logNewLine(this.currentGameState);

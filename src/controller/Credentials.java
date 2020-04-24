@@ -10,7 +10,8 @@ public enum Credentials {
 	public final double SELECT_IMAGEVIEW_WIDTH = 1.0 / 2;
 	public NumbersPair DimensionsFrame, DimensionsGapBetweenComponents, DimensionsTile, DimensionsTileAndGap;
 	public NumbersPair CoordinatesTextPanel, CoordinatesDeckNormal, CoordinatesDeckSafe, CoordinatesDrawNormal,
-			CoordinatesDrawSeer, CoordinatesBoardFirstTile, CoordinatesDiscardPile;
+			CoordinatesDrawSeer, CoordinatesBoardFirstTile, CoordinatesDiscardPile, CoordinatesDiscardPileChameleon,
+			CoordinatesDefensiveFormationTexts;
 	public double gapBetweenBorders = 25, textHeight = 50;
 
 	private Credentials() {
@@ -51,13 +52,21 @@ public enum Credentials {
 		this.CoordinatesTextPanel = new NumbersPair(x, y);
 
 		x = this.DimensionsFrame.x - this.gapBetweenBorders
-				- 3 * (this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x) - this.DimensionsTile.x / 2;
+				- 4 * (this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x) - this.DimensionsTile.x / 2;
 		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y / 2;
 		this.CoordinatesBoardFirstTile = new NumbersPair(x, y);
 
 		x = this.gapBetweenBorders;
 		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y;
 		this.CoordinatesDiscardPile = new NumbersPair(x, y);
+
+		x = this.gapBetweenBorders + this.DimensionsTileAndGap.x;
+		y = CoordinatesDiscardPile.y;
+		this.CoordinatesDiscardPileChameleon = new NumbersPair(x, y);
+
+		x = gapBetweenBorders;
+		y = this.CoordinatesDiscardPile.y - 3 * this.textHeight - 3 * this.DimensionsGapBetweenComponents.y;
+		this.CoordinatesDefensiveFormationTexts = new NumbersPair(x, y);
 
 	}
 

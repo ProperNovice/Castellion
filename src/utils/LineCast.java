@@ -10,7 +10,7 @@ public enum LineCast {
 	private ArrayList<ImageViewAble> listLineCast = new ArrayList<ImageViewAble>();
 	private ArrayList<ImageViewAble> listStarting = new ArrayList<ImageViewAble>();
 
-	public <T> ArrayList<T> lineCast(ImageViewAble imageViewAble, DirectionEnum directionEnum, int units) {
+	public <T> ArrayList<T> lineCastList(ImageViewAble imageViewAble, DirectionEnum directionEnum, int units) {
 
 		ImageView imageView = imageViewAble.getImageView();
 
@@ -20,12 +20,24 @@ public enum LineCast {
 		double height = imageView.getHeight();
 		NumbersPair dimensions = new NumbersPair(width, height);
 
-		return lineCast(startingX, startingY, dimensions, directionEnum, units);
+		return lineCastList(startingX, startingY, dimensions, directionEnum, units);
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> ArrayList<T> lineCast(double startingX, double startingY, NumbersPair dimensions,
+	public <T> Object lineCastSingle(ImageViewAble imageViewAble, DirectionEnum directionEnum, int units) {
+
+		lineCastList(imageViewAble, directionEnum, units);
+
+		if (this.listLineCast.isEmpty())
+			return null;
+		else
+			return (T) this.listLineCast.getFirst();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> lineCastList(double startingX, double startingY, NumbersPair dimensions,
 			DirectionEnum directionEnum, int units) {
 
 		this.startingX = startingX;
@@ -35,6 +47,19 @@ public enum LineCast {
 
 		executeLineCast();
 		return (ArrayList<T>) this.listLineCast;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> Object lineCastSingle(double startingX, double startingY, NumbersPair dimensions,
+			DirectionEnum directionEnum, int units) {
+
+		lineCastList(startingX, startingY, dimensions, directionEnum, units);
+
+		if (this.listLineCast.isEmpty())
+			return null;
+		else
+			return (T) this.listLineCast.getFirst();
 
 	}
 
@@ -182,6 +207,9 @@ public enum LineCast {
 		ArrayList<ImageViewAble> list = new ArrayList<ImageViewAble>();
 
 		for (ImageViewAble imageViewAble : MapImageViews.INSTANCE.getImageViewsMap()) {
+
+			if (imageViewAble instanceof SelectImageView)
+				continue;
 
 			ImageView imageView = MapImageViews.INSTANCE.getImageViewsMap().getValue(imageViewAble);
 

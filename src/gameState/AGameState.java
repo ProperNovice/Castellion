@@ -41,6 +41,10 @@ public abstract class AGameState {
 
 	}
 
+	protected final void concealText() {
+		Text.INSTANCE.concealText();
+	}
+
 	public final void handleTilePressed(Tile tile) {
 
 		if (Lists.INSTANCE.drawSeer.getArrayList().contains(tile))
@@ -53,6 +57,8 @@ public abstract class AGameState {
 			handleTileEmptyPressed(tile);
 		else if (Lists.INSTANCE.board.listBoard.contains(tile))
 			handleTileBoardPressedNonEmpty(tile);
+		else if (Lists.INSTANCE.discardPileChameleon.getArrayList().contains(tile))
+			handleTileDiscardPileChameleonPressed(tile);
 
 	}
 
@@ -73,6 +79,10 @@ public abstract class AGameState {
 	}
 
 	protected void handleTileBoardPressedNonEmpty(Tile tile) {
+
+	}
+
+	protected void handleTileDiscardPileChameleonPressed(Tile tile) {
 
 	}
 

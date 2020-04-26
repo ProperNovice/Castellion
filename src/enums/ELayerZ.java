@@ -2,6 +2,6 @@ package enums;
 
 public enum ELayerZ {
 
-	A, SELECT_IMAGEVIEW;
+	ORDEAL_CARDS, A, SELECT_IMAGEVIEW;
 
 }

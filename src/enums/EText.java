@@ -22,6 +22,7 @@ public enum EText {
 	CHOOSE_TILE_TO_RECOVER("Choose tile to recover", TextTypeEnum.INDICATOR),
 	CHOOSE_TILE_TO_MOVE("Choose tile to move", TextTypeEnum.INDICATOR),
 	CHOOSE_PLACE_TO_MOVE_TO("Choose place to move to", TextTypeEnum.INDICATOR),
+	RESOLVE_ORDEAL_CARD("Resolve ordeal card", TextTypeEnum.INDICATOR),
 
 	;
 

@@ -17,6 +17,10 @@ public enum EGameState {
 	RESOLVE_CHAMELEON(new ResolveChameleon()),
 	RESOLVE_PYRO_DESTROY(new ResolvePyroDestroy()),
 	RESOLVE_PYRO_MOVE(new ResolvePyroMove()),
+	ORDEAL_CARD_RESOLVE_CHECK(new OrdealCardResolveCheck()),
+	RESOLVE_ORDEAL_CARD(new ResolveOrdealCard()),
+	END_GAME_WIN(new EndGameWin()),
+	END_GAME_LOSE(new EndGameLose()),
 
 	;
 

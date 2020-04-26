@@ -15,7 +15,7 @@ public class ListImageViewAbles<T> implements Iterable<T> {
 		this.coordinates = coordinates;
 		this.coordinates.setList(this.arrayList);
 
-		Lists.INSTANCE.iSaveLoadStateAbles.addLast(this.arrayList);
+		Lists.INSTANCE.lists.addLast(this.arrayList);
 		RealTimeDuplicateProtection.INSTANCE.addList(this.arrayList);
 
 	}

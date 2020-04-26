@@ -679,4 +679,50 @@ public enum Board {
 
 	}
 
+	public void shiftBoard() {
+
+		boolean retry;
+
+		do {
+
+			retry = false;
+
+			createFoundationList();
+
+			for (Tile tile : this.listBoard) {
+
+				if (this.listFoundation.contains(tile))
+					continue;
+
+				Tile tileUnder = (Tile) LineCast.INSTANCE.lineCastSingle(tile, DirectionEnum.DOWN, 1);
+
+				if (tileUnder != null)
+					continue;
+
+				double x = tile.getImageView().getCenterX();
+				double y = tile.getImageView().getCenterY();
+				y += Credentials.INSTANCE.DimensionsTileAndGap.y;
+				tile.getImageView().relocateCenter(x, y);
+				retry = true;
+
+			}
+
+		} while (retry);
+
+		relocateBoard();
+
+	}
+
+	public void destroyFoundationAndShiftBoard() {
+
+		createFoundationList();
+
+		for (Tile tile : this.listFoundation)
+			this.listBoard.remove(tile);
+
+		shiftBoard();
+		createFoundationList();
+
+	}
+
 }

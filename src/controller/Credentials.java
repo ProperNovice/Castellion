@@ -8,10 +8,11 @@ public enum Credentials {
 
 	public final String primaryStageTitle = "Castellion";
 	public final double SELECT_IMAGEVIEW_WIDTH = 1.0 / 2;
-	public NumbersPair DimensionsFrame, DimensionsGapBetweenComponents, DimensionsTile, DimensionsTileAndGap;
+	public NumbersPair DimensionsFrame, DimensionsGapBetweenComponents, DimensionsTile, DimensionsTileAndGap,
+			DimensionsCard;
 	public NumbersPair CoordinatesTextPanel, CoordinatesDeckNormal, CoordinatesDeckSafe, CoordinatesDrawNormal,
 			CoordinatesDrawSeer, CoordinatesBoardFirstTile, CoordinatesDiscardPile, CoordinatesDiscardPileChameleon,
-			CoordinatesDefensiveFormationTexts;
+			CoordinatesDefensiveFormationTexts, CoordinatesOrdealCards;
 	public double gapBetweenBorders = 25, textHeight = 50;
 
 	private Credentials() {
@@ -30,6 +31,10 @@ public enum Credentials {
 		x = this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x;
 		y = this.DimensionsTile.y + this.DimensionsGapBetweenComponents.y;
 		this.DimensionsTileAndGap = new NumbersPair(x, y);
+
+		x = 196;
+		y = 300;
+		this.DimensionsCard = new NumbersPair(x, y);
 
 		x = this.gapBetweenBorders;
 		y = this.gapBetweenBorders;
@@ -57,7 +62,8 @@ public enum Credentials {
 		this.CoordinatesBoardFirstTile = new NumbersPair(x, y);
 
 		x = this.gapBetweenBorders;
-		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y;
+		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y
+				- this.DimensionsGapBetweenComponents.y - this.DimensionsCard.y;
 		this.CoordinatesDiscardPile = new NumbersPair(x, y);
 
 		x = this.gapBetweenBorders + this.DimensionsTileAndGap.x;
@@ -67,6 +73,10 @@ public enum Credentials {
 		x = gapBetweenBorders;
 		y = this.CoordinatesDiscardPile.y - 3 * this.textHeight - 3 * this.DimensionsGapBetweenComponents.y;
 		this.CoordinatesDefensiveFormationTexts = new NumbersPair(x, y);
+
+		x = this.gapBetweenBorders;
+		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsCard.y;
+		this.CoordinatesOrdealCards = new NumbersPair(x, y);
 
 	}
 

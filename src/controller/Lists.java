@@ -1,5 +1,6 @@
 package controller;
 
+import cards.CardOrdeal;
 import enums.EDefenderFaction;
 import enums.EShapeType;
 import interfaces.ISaveLoadStateAble;
@@ -15,8 +16,9 @@ public enum Lists implements ISaveLoadStateAble {
 
 	INSTANCE;
 
-	public ArrayList<ISaveLoadStateAble> iSaveLoadStateAbles = new ArrayList<ISaveLoadStateAble>();
+	public ArrayList<ArrayList<? extends Object>> lists = new ArrayList<>();
 	public ListImageViewAbles<Tile> deckNormal, deckSafe, drawNormal, drawSeer, discardPile, discardPileChameleon;
+	public ListImageViewAbles<CardOrdeal> ordealCards;
 	public Board board = null;
 
 	public void instantiate() {
@@ -25,11 +27,16 @@ public enum Lists implements ISaveLoadStateAble {
 		createDeckSafe();
 		startGame();
 
-		Logger.INSTANCE.logNewLine("lists instantiated -> " + this.iSaveLoadStateAbles.size());
+		OrdealCardTraitorList.INSTANCE.instantiate();
+
+		Logger.INSTANCE.logNewLine("lists instantiated -> " + this.lists.size());
 
 	}
 
 	public void startGame() {
+
+		for (ArrayList<? extends Object> list : this.lists)
+			list.clear();
 
 		// deck
 
@@ -41,6 +48,10 @@ public enum Lists implements ISaveLoadStateAble {
 		this.deckSafe.getArrayList().shuffle();
 		this.deckSafe.toFrontFirstImageView();
 		this.deckSafe.relocateImageViews();
+
+		// ordeal cards
+
+		createOrdealCards();
 
 	}
 
@@ -60,6 +71,19 @@ public enum Lists implements ISaveLoadStateAble {
 				this.deckSafe.getArrayList().addLast(new TileDefenderSafe(eDefenderFaction, eShapeType));
 
 		this.deckSafe.getArrayList().saveStart();
+
+	}
+
+	private void createOrdealCards() {
+
+		this.ordealCards.getArrayList().addAll(OrdealCardManager.INSTANCE.getSet());
+
+		for (CardOrdeal ordealCard : this.ordealCards) {
+			ordealCard.getImageView().setVisible(true);
+			ordealCard.getImageView().flipBack();
+		}
+
+		this.ordealCards.relocateImageViews();
 
 	}
 
@@ -106,12 +130,18 @@ public enum Lists implements ISaveLoadStateAble {
 				new CoordinatesBuilder().dimensionsNumbersPair(Credentials.INSTANCE.DimensionsTile)
 						.coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesDiscardPileChameleon).build());
 
+		// ordeal cards
+
+		this.ordealCards = new ListImageViewAbles<CardOrdeal>(
+				new CoordinatesBuilder().dimensionsNumbersPair(Credentials.INSTANCE.DimensionsCard)
+						.coordinatesNumbersPair(Credentials.INSTANCE.CoordinatesOrdealCards).build());
+
 	}
 
 	@Override
 	public void saveStart() {
 
-		for (ISaveLoadStateAble iSaveLoadStateAble : this.iSaveLoadStateAbles)
+		for (ISaveLoadStateAble iSaveLoadStateAble : this.lists)
 			iSaveLoadStateAble.saveStart();
 
 	}
@@ -119,7 +149,7 @@ public enum Lists implements ISaveLoadStateAble {
 	@Override
 	public void loadStart() {
 
-		for (ISaveLoadStateAble iSaveLoadStateAble : this.iSaveLoadStateAbles)
+		for (ISaveLoadStateAble iSaveLoadStateAble : this.lists)
 			iSaveLoadStateAble.loadStart();
 
 	}
@@ -127,7 +157,7 @@ public enum Lists implements ISaveLoadStateAble {
 	@Override
 	public void saveState() {
 
-		for (ISaveLoadStateAble iSaveLoadStateAble : this.iSaveLoadStateAbles)
+		for (ISaveLoadStateAble iSaveLoadStateAble : this.lists)
 			iSaveLoadStateAble.saveState();
 
 	}
@@ -135,7 +165,7 @@ public enum Lists implements ISaveLoadStateAble {
 	@Override
 	public void loadState() {
 
-		for (ISaveLoadStateAble iSaveLoadStateAble : this.iSaveLoadStateAbles)
+		for (ISaveLoadStateAble iSaveLoadStateAble : this.lists)
 			iSaveLoadStateAble.loadState();
 
 	}

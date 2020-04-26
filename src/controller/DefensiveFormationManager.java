@@ -9,7 +9,7 @@ public enum DefensiveFormationManager {
 	private TextIndicator bastionTextIndicator = new TextIndicator();
 	private TextIndicator lineOfDefenceTextIndicator = new TextIndicator();
 	private TextIndicator towerTextIndicator = new TextIndicator();
-	private int bastions, lineOfDefences, towers;
+	public int bastions, lineOfDefences, towers;
 
 	private DefensiveFormationManager() {
 

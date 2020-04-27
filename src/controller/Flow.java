@@ -11,12 +11,16 @@ public enum Flow {
 
 	private EGameState currentGameState = null;
 	private ArrayList<EGameState> flow = new ArrayList<>();
+	private ArrayList<EGameState> flowTurn = new ArrayList<>();
 
 	private Flow() {
 		createTurns();
 	}
 
 	public void proceed() {
+
+		if (this.flow.isEmpty())
+			this.flow.addAll(this.flowTurn);
 
 		this.currentGameState = this.flow.removeFirst();
 		executeGameState();
@@ -32,9 +36,11 @@ public enum Flow {
 
 	private void createTurns() {
 
-//		this.flow.addLast(EGameState.DRAW_PHASE);
-//		this.flow.addLast(EGameState.HANDLE_TILE_TO_PLAY);
-//		this.flow.addLast(EGameState.ORDEAL_CARD_RESOLVE_CHECK);
+		this.flowTurn.addLast(EGameState.DRAW_PHASE);
+		this.flowTurn.addLast(EGameState.HANDLE_TILE_TO_PLAY);
+		this.flowTurn.addLast(EGameState.ORDEAL_CARD_RESOLVE_CHECK);
+		this.flowTurn.addLast(EGameState.RESOLVE_ORDEAL_CARD_ENDED);
+		this.flowTurn.addLast(EGameState.END_TURN);
 
 	}
 

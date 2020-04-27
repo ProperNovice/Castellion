@@ -49,9 +49,18 @@ public enum Lists implements ISaveLoadStateAble {
 		this.deckSafe.toFrontFirstImageView();
 		this.deckSafe.relocateImageViews();
 
+		for (Tile tile : this.deckSafe) {
+			tile.getImageView().setVisible(true);
+			tile.getImageView().flipBack();
+		}
+
 		// ordeal cards
 
 		createOrdealCards();
+
+		// board
+
+		this.board.listBoard.clear();
 
 	}
 
@@ -61,6 +70,11 @@ public enum Lists implements ISaveLoadStateAble {
 		this.deckNormal.getArrayList().addAll(TileDeck.INSTANCE.getDeck());
 		this.deckNormal.toFrontFirstImageView();
 		this.deckNormal.relocateImageViews();
+
+		for (Tile tile : this.deckNormal) {
+			tile.getImageView().setVisible(true);
+			tile.getImageView().flipBack();
+		}
 
 	}
 

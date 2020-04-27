@@ -57,7 +57,7 @@ public enum Credentials {
 		this.CoordinatesTextPanel = new NumbersPair(x, y);
 
 		x = this.DimensionsFrame.x - this.gapBetweenBorders
-				- 4 * (this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x) - this.DimensionsTile.x / 2;
+				- 3 * (this.DimensionsTile.x + this.DimensionsGapBetweenComponents.x) - this.DimensionsTile.x / 2;
 		y = this.DimensionsFrame.y - this.gapBetweenBorders - this.DimensionsTile.y / 2;
 		this.CoordinatesBoardFirstTile = new NumbersPair(x, y);
 

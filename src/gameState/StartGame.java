@@ -5,7 +5,6 @@ import controller.Lists;
 import controller.Modifiers;
 import controller.OrdealCardTraitorList;
 import enums.EDefenderFaction;
-import enums.EGameState;
 import enums.EShapeType;
 import tile.Tile;
 import tile.TileDefender;
@@ -17,54 +16,53 @@ public class StartGame extends AGameState {
 	@Override
 	public void handleGameStateChange() {
 
-		Flow.INSTANCE.getFlow().addFirst(EGameState.END_GAME);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.END_GAME);
 
 //		addTiletoListSeer(new TileDefender(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE));
 //		addTiletoListSeer(new TileTraitorNormal());
 //		addTiletoListSeer(new TileDefender(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE));
 //		addTiletoListSeer(new TileTraitorBlack());
 
-//		addTileToDrawNormalProceed(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
-
-		addTileToDiscardPile(EDefenderFaction.JUGGLER, EShapeType.CIRCLE);
-		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
-		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
-		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
-		addTileToDiscardPile(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
-		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
+//		addTileToDiscardPile(EDefenderFaction.JUGGLER, EShapeType.CIRCLE);
+//		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
+//		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
+//		addTileToDiscardPile(EDefenderFaction.SEER, EShapeType.CIRCLE);
+//		addTileToDiscardPile(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
+//		addTileToDiscardPile(EDefenderFaction.PYRO, EShapeType.SQUARE);
 
 //		leaveTilesToList(Lists.INSTANCE.deckNormal, 2);
 //		leaveTilesToList(Lists.INSTANCE.deckSafe, 1);
 
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
-		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 0);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 1);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.TRIANGLE, 1);
-		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 1);
-		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 0);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 0);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.CIRCLE, 1);
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.TRIANGLE, 1);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 1);
+//		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
 //		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
 //		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.CIRCLE, 2);
 //		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
 //		addTileToBoard(EDefenderFaction.SEER, EShapeType.CIRCLE, 2);
-		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 3);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 3);
 //		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 3);
 //		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 3);
 //		addTileToBoard(EDefenderFaction.SEER, EShapeType.TRIANGLE, 3);
 //		addTileToBoard(EDefenderFaction.SEER, EShapeType.TRIANGLE, 3);
-		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);
-		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 4);
-		addTileToBoard(EDefenderFaction.SEER, EShapeType.TRIANGLE, 4);
-		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.SQUARE, 4);
+//		addTileToBoard(EDefenderFaction.SEER, EShapeType.TRIANGLE, 4);
+//		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
 //		addTileToBoard(EDefenderFaction.CHAMELEON, EShapeType.TRIANGLE, 4);
 //		addTileToBoard(EDefenderFaction.JUGGLER, EShapeType.TRIANGLE, 4);
-		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 5);
 //		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 5);
 //		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 5);
 //		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 5);
-		Lists.INSTANCE.board.relocateBoard();
+//		addTileToBoard(EDefenderFaction.PYRO, EShapeType.SQUARE, 5);
+//		Lists.INSTANCE.board.relocateBoard();
 
-		Flow.INSTANCE.getFlow().addFirst(EGameState.DESTROY_TILES_DUE_TO_ORDEAL_CARD);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.DESTROY_TILES_DUO_TO_TRAITOR);
+//		Flow.INSTANCE.getFlow().addFirst(EGameState.DESTROY_TILES_DUE_TO_ORDEAL_CARD);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.ORDEAL_CARD_RESOLVE_CHECK);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_PYRO_MOVE);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.RESOLVE_PYRO_DESTROY);
@@ -75,8 +73,11 @@ public class StartGame extends AGameState {
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.HANDLE_TILE_TO_PLAY);
 //		Flow.INSTANCE.getFlow().addFirst(EGameState.DRAW_PHASE);
 
-		addTraitorTileToOrdealCard();
-		addTraitorTileToOrdealCard();
+//		addTraitorTileToOrdealCard();
+//		addTraitorTileToOrdealCard();
+
+		// addTileToDrawNormalProceed(EDefenderFaction.CHAMELEON, EShapeType.CIRCLE);
+//		addTraitorTileToDrawNormal();
 
 		Flow.INSTANCE.proceed();
 
@@ -93,6 +94,18 @@ public class StartGame extends AGameState {
 	protected void addTileToDrawNormalProceed(EDefenderFaction eDefenderFaction, EShapeType eShapeType) {
 
 		Tile tile = new TileDefender(eDefenderFaction, eShapeType);
+		tile.getImageView().flipFront();
+
+		Lists.INSTANCE.drawNormal.getArrayList().addLast(tile);
+		Lists.INSTANCE.drawNormal.relocateImageViews();
+
+		Modifiers.INSTANCE.setTileToPlay(tile);
+
+	}
+
+	protected void addTraitorTileToDrawNormal() {
+
+		Tile tile = new TileTraitorNormal();
 		tile.getImageView().flipFront();
 
 		Lists.INSTANCE.drawNormal.getArrayList().addLast(tile);

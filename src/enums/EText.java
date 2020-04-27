@@ -25,6 +25,11 @@ public enum EText {
 	CHOOSE_PLACE_TO_MOVE_TO("Choose place to move to", TextTypeEnum.INDICATOR),
 	RESOLVE_ORDEAL_CARD("Resolve ordeal card", TextTypeEnum.INDICATOR),
 	NOT_COMPLETE_FOUNDATION("Not complete foundation", TextTypeEnum.INDICATOR),
+	PLACE_TRAITOR_TILE_IND("Place traitor tile on ordeal card", TextTypeEnum.INDICATOR),
+	PLACE_TRAITOR_TILE_OPT("Place traitor tile on ordeal card", TextTypeEnum.OPTION),
+	DESTROY_TILES("Destroy tiles", TextTypeEnum.OPTION),
+	YOU_WON("You won", TextTypeEnum.INDICATOR),
+	YOU_LOST("You lost", TextTypeEnum.INDICATOR),
 
 	;
 

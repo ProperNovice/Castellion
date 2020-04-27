@@ -39,7 +39,7 @@ public enum Board {
 		double tileDistance = Credentials.INSTANCE.DimensionsTile.x
 				+ Credentials.INSTANCE.DimensionsGapBetweenComponents.x;
 
-		double x = Credentials.INSTANCE.CoordinatesBoardFirstTile.x - 3 * tileDistance;
+		double x = Credentials.INSTANCE.CoordinatesBoardFirstTile.x - 4 * tileDistance;
 
 		for (int counter = -1; counter < 6; counter++) {
 			this.columnCoordinates.put(counter, new NumbersPair(x, Credentials.INSTANCE.CoordinatesBoardFirstTile.y));

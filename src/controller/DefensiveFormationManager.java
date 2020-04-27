@@ -1,5 +1,6 @@
 package controller;
 
+import cards.CardOrdeal;
 import utils.TextIndicator;
 
 public enum DefensiveFormationManager {
@@ -9,7 +10,7 @@ public enum DefensiveFormationManager {
 	private TextIndicator bastionTextIndicator = new TextIndicator();
 	private TextIndicator lineOfDefenceTextIndicator = new TextIndicator();
 	private TextIndicator towerTextIndicator = new TextIndicator();
-	public int bastions, lineOfDefences, towers;
+	public int bastions, lineOfDefences = 0, towers;
 
 	private DefensiveFormationManager() {
 
@@ -38,7 +39,21 @@ public enum DefensiveFormationManager {
 
 		this.bastions = Lists.INSTANCE.board.getBastions();
 		this.lineOfDefences = Lists.INSTANCE.board.getLines();
-		this.towers = Lists.INSTANCE.board.getTowers();
+
+		int towers = Lists.INSTANCE.board.getTowers();
+
+		if (towers > this.lineOfDefences)
+			for (CardOrdeal cardOrdeal : Lists.INSTANCE.ordealCards) {
+
+				if (cardOrdeal.getImageView().isFlippedFront())
+					continue;
+
+				cardOrdeal.getImageView().flipFront();
+				break;
+
+			}
+
+		this.towers = towers;
 
 		if (this.bastions > 0)
 			updateBastion();

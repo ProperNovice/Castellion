@@ -22,6 +22,9 @@ public enum EGameState {
 	END_GAME_WIN(new EndGameWin()),
 	END_GAME_LOSE(new EndGameLose()),
 	DESTROY_TILES_DUE_TO_ORDEAL_CARD(new DestroyTilesDueToOrdealCard()),
+	RESOLVE_ORDEAL_CARD_ENDED(new ResolveOrdealCardEnded()),
+	DESTROY_TILES_DUO_TO_TRAITOR(new DestroyTilesDueToTraitor()),
+	END_TURN(new EndTurn()),
 
 	;
 

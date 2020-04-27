@@ -28,8 +28,6 @@ public enum TilesToDestroyIndicator {
 
 		text += " to destroy";
 
-		System.out.println(text);
-
 		this.textIndicator.setVisible(true);
 		this.textIndicator.setText(text);
 

@@ -27,8 +27,6 @@ public class DestroyTilesDueToOrdealCard extends AGameState {
 		ordealCard.getImageView().flipFront();
 		this.tilesToDestroy = ordealCard.getTilesToDestroy();
 
-		this.tilesToDestroy = 8; // TODO
-
 		Logger.INSTANCE.log("Tiles to destroy start -> " + this.tilesToDestroy);
 
 		this.tilesToDestroy -= DefensiveFormationManager.INSTANCE.bastions * 4;

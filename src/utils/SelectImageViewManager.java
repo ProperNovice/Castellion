@@ -49,7 +49,7 @@ public enum SelectImageViewManager {
 
 	}
 
-	public boolean hasSelectImageView(ImageViewAble imageViewAble) {
+	public boolean isSelectedImageView(ImageViewAble imageViewAble) {
 		return this.hashMap.containsKey(imageViewAble);
 	}
 

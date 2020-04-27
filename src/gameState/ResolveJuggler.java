@@ -29,7 +29,7 @@ public class ResolveJuggler extends AGameState implements ImageViewAble {
 	@Override
 	protected void handleTileBoardPressedNonEmpty(Tile tile) {
 
-		if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+		if (!SelectImageViewManager.INSTANCE.isSelectedImageView(tile))
 			return;
 
 		Text.INSTANCE.concealText();

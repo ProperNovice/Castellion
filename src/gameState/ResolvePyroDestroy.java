@@ -24,7 +24,7 @@ public class ResolvePyroDestroy extends AGameState {
 	@Override
 	protected void handleTileBoardPressedNonEmpty(Tile tile) {
 
-		if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+		if (!SelectImageViewManager.INSTANCE.isSelectedImageView(tile))
 			return;
 
 		concealText();

@@ -21,7 +21,7 @@ public enum Board {
 
 	public ArrayList<Tile> listBoard = new ArrayList<Tile>(36);
 	public ArrayList<TileEmpty> listEmptyTiles = new ArrayList<TileEmpty>();
-	private ArrayList<Tile> listFoundation = new ArrayList<Tile>(6);
+	public ArrayList<Tile> listFoundation = new ArrayList<Tile>(6);
 	private HashMap<Integer, NumbersPair> columnCoordinates = new HashMap<Integer, NumbersPair>();
 	private HashMap<Integer, ArrayList<NumbersPair>> groupCoordinates = new HashMap<Integer, ArrayList<NumbersPair>>();
 
@@ -339,10 +339,10 @@ public enum Board {
 				listBoardClone.remove(tile);
 				listBoardClone.remove(lineCast.getFirst());
 
-				if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+				if (!SelectImageViewManager.INSTANCE.isSelectedImageView(tile))
 					SelectImageViewManager.INSTANCE.addSelectImageView(tile);
 
-				if (!SelectImageViewManager.INSTANCE.hasSelectImageView(lineCast.getFirst()))
+				if (!SelectImageViewManager.INSTANCE.isSelectedImageView(lineCast.getFirst()))
 					SelectImageViewManager.INSTANCE.addSelectImageView(lineCast.getFirst());
 
 			} else {
@@ -354,10 +354,10 @@ public enum Board {
 					listBoardClone.remove(tile);
 					listBoardClone.remove(lineCast.getFirst());
 
-					if (!SelectImageViewManager.INSTANCE.hasSelectImageView(tile))
+					if (!SelectImageViewManager.INSTANCE.isSelectedImageView(tile))
 						SelectImageViewManager.INSTANCE.addSelectImageView(tile);
 
-					if (!SelectImageViewManager.INSTANCE.hasSelectImageView(lineCast.getFirst()))
+					if (!SelectImageViewManager.INSTANCE.isSelectedImageView(lineCast.getFirst()))
 						SelectImageViewManager.INSTANCE.addSelectImageView(lineCast.getFirst());
 
 				}
@@ -717,8 +717,10 @@ public enum Board {
 
 		createFoundationList();
 
-		for (Tile tile : this.listFoundation)
+		for (Tile tile : this.listFoundation) {
 			this.listBoard.remove(tile);
+			tile.getImageView().setVisible(false);
+		}
 
 		shiftBoard();
 		createFoundationList();

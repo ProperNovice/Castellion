@@ -21,6 +21,7 @@ public enum EGameState {
 	RESOLVE_ORDEAL_CARD(new ResolveOrdealCard()),
 	END_GAME_WIN(new EndGameWin()),
 	END_GAME_LOSE(new EndGameLose()),
+	DESTROY_TILES_DUE_TO_ORDEAL_CARD(new DestroyTilesDueToOrdealCard()),
 
 	;
 

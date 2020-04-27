@@ -10,6 +10,7 @@ import enums.EGameState;
 import enums.EOrdealAbility;
 import enums.EText;
 import tile.Tile;
+import utils.Logger;
 
 public class ResolveOrdealCard extends AGameState {
 
@@ -26,13 +27,19 @@ public class ResolveOrdealCard extends AGameState {
 
 		clearTraitorTiles();
 
-		if (Board.INSTANCE.foundationSize() < 6) {
+		CardOrdeal ordealCard = Lists.INSTANCE.ordealCards.getArrayList().getFirst();
+		EOrdealAbility eOrdealAbility = ordealCard.getEOrdealAbility();
+		int abilityInt = ordealCard.getOrdealAbilityInt();
 
-			Flow.INSTANCE.getFlow().clear();
-			Flow.INSTANCE.executeGameState(EGameState.END_GAME_LOSE);
+		if (Board.INSTANCE.foundationSize() < 6) {
+			EText.NOT_COMPLETE_FOUNDATION.showText();
+			loseGame();
 			return;
 
-		}
+		} else if (ordealCardRequirementsAreMet(eOrdealAbility, abilityInt))
+			resolveOrdealRequirementsAreMet();
+		else
+			resolveOrdealRequirementsAreNotMet();
 
 	}
 
@@ -47,35 +54,67 @@ public class ResolveOrdealCard extends AGameState {
 
 	}
 
-	private boolean ordealCardRequirementsAreMet() {
+	private boolean ordealCardRequirementsAreMet(EOrdealAbility eOrdealAbility, int abilityInt) {
 
-		CardOrdeal ordealCard = Lists.INSTANCE.ordealCards.getArrayList().getFirst();
-		EOrdealAbility eOrdealAbility = ordealCard.getEOrdealAbility();
-		int abilityInt = ordealCard.getOrdealAbilityInt();
+		boolean requirementsAreMet = true;
 
 		switch (eOrdealAbility) {
 
 		case BASTION:
-			return (DefensiveFormationManager.INSTANCE.bastions >= abilityInt);
+			requirementsAreMet = (DefensiveFormationManager.INSTANCE.bastions >= abilityInt);
+			break;
 
 		case FOUNDATION:
-			
+
 			for (int counter = 1; counter <= abilityInt; counter++) {
-				
+
+				Lists.INSTANCE.board.destroyFoundationAndShiftBoard();
+
+				if (Board.INSTANCE.foundationSize() < 6) {
+					requirementsAreMet = false;
+					break;
+				}
+
 			}
-			
+
 			break;
 
 		case LINE_OF_DEFENCE:
-			return (DefensiveFormationManager.INSTANCE.lineOfDefences >= abilityInt);
+			requirementsAreMet = (DefensiveFormationManager.INSTANCE.lineOfDefences >= abilityInt);
+			break;
 
 		case TOWER:
-			return (DefensiveFormationManager.INSTANCE.towers >= abilityInt);
+			requirementsAreMet = (DefensiveFormationManager.INSTANCE.towers >= abilityInt);
+			break;
 
 		}
 
-		return false;
+		Logger.INSTANCE.log("Resolving");
+		Logger.INSTANCE.log(eOrdealAbility);
+		Logger.INSTANCE.log(abilityInt);
+		Logger.INSTANCE.logNewLine(requirementsAreMet);
 
+		return requirementsAreMet;
+
+	}
+
+	private void loseGame() {
+
+		Flow.INSTANCE.getFlow().clear();
+		Flow.INSTANCE.executeGameState(EGameState.END_GAME_LOSE);
+
+	}
+
+	private void resolveOrdealRequirementsAreMet() {
+
+		CardOrdeal cardOrdeal = Lists.INSTANCE.ordealCards.getArrayList().removeFirst();
+		cardOrdeal.getImageView().setVisible(false);
+		Flow.INSTANCE.proceed();
+
+	}
+
+	private void resolveOrdealRequirementsAreNotMet() {
+		Flow.INSTANCE.executeGameState(EGameState.DESTROY_TILES_DUE_TO_ORDEAL_CARD);
 	}
 
 }

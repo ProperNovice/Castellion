@@ -34,11 +34,12 @@ public enum Flow {
 
 //		this.flow.addLast(EGameState.DRAW_PHASE);
 //		this.flow.addLast(EGameState.HANDLE_TILE_TO_PLAY);
+//		this.flow.addLast(EGameState.ORDEAL_CARD_RESOLVE_CHECK);
 
 	}
 
 	private void executeGameState() {
-		
+
 		DefensiveFormationManager.INSTANCE.updateTexts();
 
 		Logger.INSTANCE.log("executing gamestate");

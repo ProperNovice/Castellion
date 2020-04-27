@@ -61,4 +61,8 @@ public enum SelectImageViewManager {
 
 	}
 
+	public int size() {
+		return this.hashMap.size();
+	}
+
 }
